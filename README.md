@@ -1,6 +1,6 @@
 # Snake-Game-and-Decision-Tree-based-Auto-play-Algorithm
 Created in Python 3 using Pygame 1.9.6.
-
+-----------------------------------------
 
 
 Changeable in-game parameters:
@@ -12,11 +12,13 @@ Changeable in-game parameters:
 
 The implemented auto-play algorithm does not use any kind of Deep learning or Artificial Intelligence modelling.
 It does not use any Search or traversal algorithms. 
-It is merely implemented using if-else decision trees and performs satisfactorily even for large number of automated snakes.
+It is merely implemented using if-else decision trees and performs satisfactorily, even when a large number of automated snakes are involved.
 
 
 Scroll down to main() at the bottom of the Snake+Algo.py code for changing and checking game parameters.
 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
 
 
 Suggested commits:
