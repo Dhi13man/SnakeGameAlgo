@@ -350,7 +350,7 @@ def loop():
             score_save()
             end, close = True, False
             return [end, close]
-        elif this_event.key == pygame.K_c:
+        elif this_event.key == pygame.K_r:
             score_save()
             end, close = False, True
             sn.clear()
@@ -381,7 +381,7 @@ def loop():
             # Runs when snake dies
             while game_close:
                 window_item.win.fill(black)
-                window_item.message("You Lost! Press C-Play Again or Q-Quit", d_red)
+                window_item.message("A Snake died! Press R to Play Again or Q to Quit", d_red)
                 for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN:
                         game_over, game_close = game_state_changer(event)
