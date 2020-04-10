@@ -2,8 +2,7 @@
 Created in Python 3 using Pygame 1.9.6.
 -----------------------------------------
 
-Snake\Scores.txt automatically stores scores of every playing Snake, along with the timestamp, any time the Game is Restarted(R) or Quit(Q) through a score_save() helper function in the code
-
+Snake\Scores.txt automatically stores scores of every playing Snake, along with the timestamp, through a score_save() helper function in the code, any time the Game is Restarted(R) or Quit(Q).
 
 Changeable in-game parameters:
 1. Whether human plays or not.
