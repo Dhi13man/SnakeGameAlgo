@@ -115,3 +115,10 @@ AI Snake 3:	24
 AI Snake 4:	17
 AI Snake 5:	22
 
+Date: 10-4-2020	Time: 15:07:01
+AI Snake 1:	47
+AI Snake 2:	33
+AI Snake 3:	48
+AI Snake 4:	38
+AI Snake 5:	38
+
