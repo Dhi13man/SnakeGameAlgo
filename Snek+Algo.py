@@ -322,8 +322,8 @@ class Food:
         for this_snake in snake_list:
             # When snake reaches food
             if this_snake.x == self.x and this_snake.y == self.y:
-                self.x = int(round(randrange(0, window_item.scrW - self.size) / 10.0) * 10.0)
-                self.y = int(round(randrange(0, window_item.scrH - self.size) / 10.0) * 10.0)
+                self.x = int(round(randrange(0, window_item.scrW - self.size) / self.size) * self.size)
+                self.y = int(round(randrange(0, window_item.scrH - self.size) / self.size) * self.size)
                 this_snake.snake_body_len += 1
                 # Assign random other food
                 fs_list.__setitem__(this_snake, randrange(food_num))
