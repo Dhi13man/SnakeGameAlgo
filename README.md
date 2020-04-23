@@ -2,6 +2,12 @@
 
 ###### Created in Python 3, using Py-game 1.9.6.
 
+
+
+
+
+
+
 A simple 2D Snake game is present, wherein the task of the snake is to grow by consuming 'food', while avoiding the edges of the window, and it's own body. The human player's Snake achieves this through keyboard input from the user.
 
 Alternatively, the code also contains an algorithm to automatically achieve this, to an extent, I **for any number of snakes and for any speed of the snake(s**).
@@ -23,7 +29,7 @@ Changeable in-game parameters:
 3. Number of **available food** for Snakes.
 4. **Friendly Fire:** Whether Snakes can consume other snakes and thereby gain their score.
 5.  Whether number of available food is changeable in game
-> Press `w` to increase the number of available food and `s` to decrease the number of available food.
+Press `w` to **increase the number of available food** and `s` to **decrease the number of available food**.
 6. **Speed** of the Game.
 
 
