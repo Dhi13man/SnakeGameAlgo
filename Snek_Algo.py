@@ -48,15 +48,31 @@ def score_save():
     print("Score saved.")
     score_file = open("Scores.txt", "a")
     temp = datetime.now()
-    t_date = 'Date: ' + str(temp.day) + '-' + str(temp.month) + '-' + str(temp.year)
+
+    # Write down Timestamp
+    t_date = '\nDate: ' + str(temp.day) + '-' + str(temp.month) + '-' + str(temp.year)
     t_time = 'Time: ' + temp.strftime("%H:%M:%S")
     score_list = t_date + '\t' + t_time + '\n'
+
+    # Writes down Game Parameters(Modifiable food, friendly fire on, etc)
+    score_list += 'Game Parameters: '
+    if friendly_fire == 1:
+        score_list += 'Snake-to-Snake collision\t'
+    score_list += 'Modifiable food\t' if controlled_food == 1 else ("Constant " + str(food_num) + " food ")
+
+    # Writes down Game Speed
+    score_list += '\nGame Speed: ' + str(SNEK_gtg_fast) + '\n\n'
+
+    # Writes down Score of every Snake and Average Score
     for j, snake in enumerate(sn):
-        score_list += (("AI Snake " + str(j + 1)) if not user == 1 or not j == len(sn) - 2 else "Player Snake") + ":\t" \
-                      + str(snake.snake_body_len - 1) + '\n'
-        if user == 1 and j == len(sn) - 2:
-            break
-        j += 1
+        score_list += (("AI Snake " + str(j + 1)) if not user == 1 or not j == len(sn) - 1 else "Player Snake") + ":\t" \
+                      + str(snake.score) + '\n'
+    average = 0
+    for snake in sn:
+        average += snake.score
+    average = str(average / len(sn))
+    score_list += '\nAverage Score = ' + average
+
     score_list += '\n'
     score_file.write(score_list)
     score_file.close()
@@ -76,8 +92,8 @@ def get_min(lis):
 
 
 # Helper function used by game to check if snake passed edge
-def in_edge(a, b):
-    if a > window_item.scrW or a < 0 or b > window_item.scrH or b < 0:
+def beyond_edge(x, y):
+    if x > window_item.scrW or x < 0 or y > window_item.scrH or y < 0:
         return True
     else:
         return False
@@ -85,6 +101,7 @@ def in_edge(a, b):
 
 class Snake:
     def __init__(self, x, y, col):
+        self.score = 0
         self.recursion_depth = 0
         self.size = window_item.scale_factor * 10
         self.color = col
@@ -194,22 +211,22 @@ class Snake:
                 if not moved:
                     # Try moving again with less safety standards
                     if [(self.x - self.size), self.y] not in self.snake_body and \
-                            not in_edge(self.x - self.size, self.y):
+                            not beyond_edge(self.x - self.size, self.y):
                         # Move left
                         self.new_x = -self.size
                         self.new_y = 0
                     elif [(self.x + self.size), self.y] not in self.snake_body and \
-                            not in_edge(self.x + self.size, self.y):
+                            not beyond_edge(self.x + self.size, self.y):
                         # Move right
                         self.new_x = self.size
                         self.new_y = 0
                     elif [self.x, (self.y - self.size)] not in self.snake_body and \
-                            not in_edge(self.x, self.y - self.size):
+                            not beyond_edge(self.x, self.y - self.size):
                         # Move up
                         self.new_x = 0
                         self.new_y = -self.size
                     elif [self.x, (self.y + self.size)] not in self.snake_body and \
-                            not in_edge(self.x, self.y + self.size):
+                            not beyond_edge(self.x, self.y + self.size):
                         # Move down
                         self.new_x = 0
                         self.new_y = self.size
@@ -241,7 +258,7 @@ class Snake:
                             return
                         else:
                             # AI gives up (you can add your own code here IDK)
-                            return
+                            pass
                 else:
                     # Reset recursion depth since movement took place
                     self.recursion_depth = 0
@@ -249,22 +266,22 @@ class Snake:
 
         # Movement to save snake from edge ASAP
         def edge_moves():
-            if in_edge(self.x - 1.8 * self.size, self.y):
+            if beyond_edge(self.x - 1.8 * self.size, self.y):
                 if (self.y - fd.y) >= 0:
                     actual_movement(0)
                 else:
                     actual_movement(1)
-            elif in_edge(self.x + 1.8 * self.size, self.y):
+            elif beyond_edge(self.x + 1.8 * self.size, self.y):
                 if (self.y - fd.y) >= 0:
                     actual_movement(0)
                 else:
                     actual_movement(1)
-            elif in_edge(self.x, self.y - 1.8 * self.size):
+            elif beyond_edge(self.x, self.y - 1.8 * self.size):
                 if (self.x - fd.x) >= 0:
                     actual_movement(3)
                 else:
                     actual_movement(2)
-            elif in_edge(self.x, self.y + 1.8 * self.size):
+            elif beyond_edge(self.x, self.y + 1.8 * self.size):
                 if (self.x - fd.x) >= 0:
                     actual_movement(3)
                 else:
@@ -290,21 +307,39 @@ class Snake:
 
     # Updates state of snake and finds out whether the snake has died. If not, draws snake
     def update(self):
-        gc = False
-        # Lose conditions
-        if in_edge(self.x, self.y):  # Edge touch?
-            gc = True
-        self.x += self.new_x
-        self.y += self.new_y
-        head = [self.x, self.y]
-        self.snake_body.append(head)
-        if len(self.snake_body) > self.snake_body_len:
-            del self.snake_body[0]
+        # Lose condition: Edge
+        if beyond_edge(self.x, self.y):
+            self.snake_body_len = 0
+            self.snake_body.clear()
+
+        head = []
+        # Change Snake body(only if alive)
+        if self.snake_body_len != 0:
+            self.x += self.new_x
+            self.y += self.new_y
+            head = [self.x, self.y]
+            self.snake_body.append(head)
+            if len(self.snake_body) > self.snake_body_len:
+                del self.snake_body[0]
+
+        # Lose condition: Own body
         for x in self.snake_body[:-1]:
             if x == head:
-                gc = True
-        self.draw(self.size)
-        return gc
+                self.snake_body_len = 0
+                self.snake_body.clear()
+
+        # Friendly fire condition: Eats other snake and gets increased score and growth potential
+        if friendly_fire == 1:
+            for other_snake in sn:
+                if head in other_snake.snake_body[:-1]:
+                    self.snake_body_len += other_snake.snake_body_len
+                    self.score += other_snake.snake_body_len
+                    other_snake.snake_body_len = 0
+                    other_snake.snake_body.clear()
+
+        # Draw if hasn't lost
+        if len(self.snake_body) != 0:
+            self.draw(self.size)
 
 
 class Food:
@@ -320,11 +355,12 @@ class Food:
     # Detects collision of self with assigned snake and regenerates food somewhere else accordingly
     def regen(self, snake_list):
         for this_snake in snake_list:
-            # When snake reaches food
-            if this_snake.x == self.x and this_snake.y == self.y:
+            # When snake reaches food and is not dead
+            if this_snake.x == self.x and this_snake.y == self.y and this_snake.snake_body_len != 0:
                 self.x = int(round(randrange(0, window_item.scrW - self.size) / self.size) * self.size)
                 self.y = int(round(randrange(0, window_item.scrH - self.size) / self.size) * self.size)
                 this_snake.snake_body_len += 1
+                this_snake.score += 1
                 # Assign random other food
                 fs_list.__setitem__(this_snake, randrange(food_num))
                 # Assign nearest food instead
@@ -340,11 +376,13 @@ class Food:
 
 # Game engine
 def loop():
+    global food_num
     game_over = False
     game_close = False
 
     # Stops/Restarts Game
     def game_state_changer(this_event):
+        global food_num
         if this_event.key == pygame.K_q:
             score_save()
             end, close = True, False
@@ -357,10 +395,22 @@ def loop():
             fs_list.clear()
             loop()
             return [end, close]
+        elif controlled_food == 1:
+            if this_event.key == pygame.K_w:
+                print("Food increased!")
+                food_num += 1
+                fo.append(Food())
+            elif this_event.key == pygame.K_s:
+                print("Food decreased!")
+                food_num -= 1
+                fo.pop()
+            for this_snake in sn:
+                fs_list.__setitem__(this_snake, randrange(food_num))
+            return [game_over, game_close]
         return [game_over, game_close]
 
-    # Creates as many snake objects as needed(Collision between snakes hasn't been programmed)
-    for i in range(num if user == 0 else num + 1):
+    # Creates as many snake objects as needed
+    for i in range(num):
         sn.append(
             Snake(window_item.scrW / 2, window_item.scrH / 2, (colours[randint(0, len(colours) - 1)]
                                                                if i >= len(colours) else colours[i])))
@@ -388,9 +438,9 @@ def loop():
                     return
                 pygame.display.update()
 
+            # !!!!!!!!!!!!!Snakes search for food!!!!!!!!!!!!!
             if user == 0 or (user == 1 and i < num - 1):
                 sn[i].snake_modAI(fo[fs_list.get(sn[i])])  # AIs search assigned food
-
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     game_over, game_close = game_state_changer(event)
@@ -402,23 +452,29 @@ def loop():
             window_item.win.fill(black)  # Updates window
 
         # Updates state of Game
-        for i in range(food_num):  # Food update
-            fo[i].update()
-        for i in range(num):  # Snake update(and hence Game state too)
-            if user == 0:
-                game_close = game_close or sn[i].update()
-            else:
-                if i < num - 1:
-                    sn[i].update()
-                else:
-                    game_close = sn[num - 1].update()
-            pygame.display.update()
+        for this_food in range(food_num):  # Food update
+            fo[this_food].update()
 
-        # Updates all food for all Snakes
-        for i in fo:
-            i.regen(sn)
-        # Next time instant
-        window_item.clock.tick(SNEK_gtg_fast)
+        # Generate list of alive snakes
+        alive_sn = []
+        for snake in sn:
+            if snake.snake_body_len != 0:
+                alive_sn.append(snake)
+
+        # End game if 0 alive snakes
+        if len(alive_sn) == 0:
+            game_close = True
+        else:
+            for snake in sn:  # Update alive snakes(and hence Game state too)
+                snake.update()
+                pygame.display.update()
+
+            # Updates all food for all Snakes
+            for i in fo:
+                i.regen(sn)
+
+            # Next time instant
+            window_item.clock.tick(SNEK_gtg_fast)
     # Close windows
     pygame.quit()
     quit()
@@ -426,15 +482,21 @@ def loop():
 
 if __name__ == '__main__':
     #   Initial configurations
-    num = 5  # Number of snakes
+    num = 50  # Number of snakes
     user = 0  # Is human going to play?
-    food_num = 10  # Number of available food
+    friendly_fire = 0  # Whether snakes can kill other snakes
+
+    # Number of available food
+    global food_num
+    food_num = 25
+    controlled_food = 0  # Whether the number of food can be changed while game is running
+    # (Press 'w' to increase, 's' to decrease)
 
     sn = []  # List of Snakes is going to be stored here
     fo = []  # List of Food is going to be stored here
     fs_list = {}  # Which Food corresponds to which Snake
 
-    SNEK_gtg_fast = 20  # How fast the game (vis-a-vis the Snakes) moves
+    SNEK_gtg_fast = 200  # How fast the game (vis-a-vis the Snakes) moves
 
     #  Game-play starts here
     window_item = Window()

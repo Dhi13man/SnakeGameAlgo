@@ -17,11 +17,15 @@ It is implemented using _ _if-else decision trees_ _ and performs satisfactorily
 
 Changeable in-game parameters:
 --
-1. Whether human plays or not.
-2. Number of total Snakes. 
+1. Whether **human plays** or not.
+2. Number of **total Snakes**. 
 >*Number of AI Snakes = Total Snakes - (Is Human playing)*
-3. Number of available food for Snakes.
-4. Speed of the Game.
+3. Number of **available food** for Snakes.
+4. **Friendly Fire:** Whether Snakes can consume other snakes and thereby gain their score.
+5.  Whether number of available food is changeable in game
+> Press `w` to increase the number of available food and `s` to decrease the number of available food.
+6. **Speed** of the Game.
+
 
 Scroll down to main() at the bottom of the Snake\Snake+Algo.py code for checking and changing game parameters.
 
