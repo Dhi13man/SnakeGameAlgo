@@ -19,7 +19,7 @@ Changeable in-game parameters:
 --
 1. Whether human plays or not.
 2. Number of total Snakes. 
-    *Number of AI Snakes = Total Snakes - (Is Human playing)*
+>*Number of AI Snakes = Total Snakes - (Is Human playing)*
 3. Number of available food for Snakes.
 4. Speed of the Game.
 
