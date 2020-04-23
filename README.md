@@ -12,7 +12,7 @@ It does not use any Search or traversal algorithms.
 It is implemented using _ _if-else decision trees_ _ and performs satisfactorily, even when a large number of automated snakes are involved.
 
 [Scores.txt](Scores.txt) automatically stores scores of every playing Snake, along with the timestamp, through a score_save() helper function in the code, every time the Game is `Restarted(R)` or `Quit(Q)`.
-
+It also saves Average Score of Snakes, and the Game Parameters(see below) that the Game was played with.
 
 
 Changeable in-game parameters:
@@ -33,5 +33,4 @@ Scroll down to main() at the bottom of the Snake\Snake+Algo.py code for checking
 Suggested commits:
 --
 1. Further improvements to the algorithm of the Snake (if possible, without implementing techniques like Learning)
-2. Collision detection between snakes
-3. Inclusion of traits like competitiveness, aggression to the automatic solving algorithm
+2. Inclusion of traits like competitiveness, aggression to the automatic solving algorithm

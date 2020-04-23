@@ -57,16 +57,16 @@ def score_save():
     # Writes down Game Parameters(Modifiable food, friendly fire on, etc)
     score_list += 'Game Parameters: '
     if friendly_fire == 1:
-        score_list += 'Snake-to-Snake collision\t'
-    score_list += 'Modifiable food\t' if controlled_food == 1 else ("Constant " + str(food_num) + " food ")
+        score_list += 'Snake-to-Snake collision\t\t'
+    score_list += 'Modifiable food\t\t' if controlled_food == 1 else ("Constant " + str(food_num) + " food\t\t")
 
     # Writes down Game Speed
     score_list += '\nGame Speed: ' + str(SNEK_gtg_fast) + '\n\n'
 
     # Writes down Score of every Snake and Average Score
     for j, snake in enumerate(sn):
-        score_list += (("AI Snake " + str(j + 1)) if not user == 1 or not j == len(sn) - 1 else "Player Snake") + ":\t" \
-                      + str(snake.score) + '\n'
+        score_list += (("AI Snake " + str(j + 1)) if not user == 1 or not j == len(sn) - 1 else "Player Snake") + \
+                      ":\t" + str(snake.score) + '\n'
     average = 0
     for snake in sn:
         average += snake.score
