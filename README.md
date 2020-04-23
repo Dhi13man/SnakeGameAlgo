@@ -10,10 +10,13 @@ Alternatively, the code also contains an algorithm to automatically achieve this
 The implemented **auto-play algorithm** does not use any kind of Deep learning or Artificial Intelligence modelling. It does not use any Search or traversal algorithms.
 It is implemented using _if-else decision trees_ and performs satisfactorily, even when a large number of automated snakes are involved.
 
+----
 ![](Simultaneous_multiple_automatic_snakes.png)
 
 ----
-[**Scores.txt**](Scores.txt) automatically stores scores of every playing Snake, along with the **timestamp**, through a score_save() helper function in the code, every time the Game is `Restarted(R)` or `Quit(Q)`.
+[**Scores.txt**](Scores.txt) 
+--
+It automatically stores scores of every playing Snake, along with the **timestamp**, through a score_save() helper function in the code, every time the Game is `Restarted(R)` or `Quit(Q)`.
 It also saves Average Score of Snakes, and the Game Parameters(see below) that the Game was played with.
 
 -----
