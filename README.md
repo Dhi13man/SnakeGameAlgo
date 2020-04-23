@@ -1,9 +1,8 @@
 # Snake-Game-and-Decision-Tree-based-Auto-play-Algorithm
 
-Created in Python 3 using Py-game 1.9.6.
--
+###### Created in Python 3, using Py-game 1.9.6.
 
-The game created in Python is a simple 2D Snake game wherein the task of the snake is to grow by consuming 'food', while avoiding the edges of the window, and it's own body. The human player's Snake achieves this through keyboard input from the user.
+A simple 2D Snake game is present, wherein the task of the snake is to grow by consuming 'food', while avoiding the edges of the window, and it's own body. The human player's Snake achieves this through keyboard input from the user.
 
 Alternatively, the code also contains an algorithm to automatically achieve this, to an extent, for any number of snakes and for any speed of the snake(s).
 
@@ -12,8 +11,7 @@ It does not use any Search or traversal algorithms.
 
 It is implemented using if-else decision trees and performs satisfactorily, even when a large number of automated snakes are involved.
 
-
-Scores.txt automatically stores scores of every playing Snake, along with the timestamp, through a score_save() helper function in the code, every time the Game is Restarted(R) or Quit(Q).
+[Scores.txt](Scores.txt) automatically stores scores of every playing Snake, along with the timestamp, through a score_save() helper function in the code, every time the Game is Restarted(R) or Quit(Q).
 
 
 
