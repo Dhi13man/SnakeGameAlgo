@@ -47,3 +47,11 @@ Suggested commits:
 --
 1. Further improvements to the algorithm of the Snake (if possible, without implementing techniques like Learning)
 2. Inclusion of traits like competitiveness, aggression to the automatic solving algorithm
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+
+See [LICENSE](LICENSE).
